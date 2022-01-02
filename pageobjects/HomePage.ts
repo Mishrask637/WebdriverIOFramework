@@ -1,3 +1,4 @@
+import { PropertiesReader } from './../Utils/PropertiesReader';
 import { IndexKind } from 'typescript';
 import { ChainablePromiseElement, Element } from 'webdriverio';
 import click from 'webdriverio/build/commands/element/click';
@@ -5,6 +6,7 @@ import { ExpectedWaits } from '../Utils/ExpectedWaits';
 import { UIActionLibrary } from '../Utils/UIActionLibrary';
 const uiActions = new UIActionLibrary();
 const expectedWaits = new ExpectedWaits();
+const prop = new PropertiesReader();
 export class HomePage {
 
     addCustomerTab = $("//button[contains(text(),'Add Customer')]");
@@ -83,9 +85,10 @@ export class HomePage {
 
     async navigateToManagerLoginHomepage()
     {
-        await browser.url('https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager');
+        let uri = await prop.getProperty('uri');
+        await browser.url(uri);
         await browser.maximizeWindow();
-        await browser.setTimeout({ 'implicit': this.implicitTimeout });
+        await browser.setTimeout({'implicit': this.implicitTimeout });
     }
 
     async selectCustomerName(customerName)
