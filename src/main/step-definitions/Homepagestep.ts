@@ -2,19 +2,20 @@ import { Given, When, Then } from '@wdio/cucumber-framework';
 import {HomePage} from '../pageobjects/HomePage';
 const home = new HomePage();
 
+
 Given(/^user is on the Manager Home page$/, async() => {
 	await home.navigateToManagerLoginHomepage();
 });
 
-When(/^user clicks on "([^"]*)" Tab$/, async (tabname) => {
+When(/^user clicks on "([^"]*)" Tab$/,async (tabname) => {
 	await home.clickOnTab(tabname);
 });
 
-When(/^user enters customer "([^"]*)" "([^"]*)"$/, async (fieldname,fieldValue) => {
+When(/^user enters customer "([^"]*)" "([^"]*)"$/,async (fieldname,fieldValue) => {
 	await home.enterFieldValue(fieldname,fieldValue);
 });
 
-Then(/^user clicks on "([^"]*)" Button and verifies the Customer ID generated$/, async(buttonName) => {
+Then(/^user clicks on "([^"]*)" Button and verifies the Customer ID generated$/,async (buttonName) => {
 	await home.clickOnButton(buttonName);
 });
 

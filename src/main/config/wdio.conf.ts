@@ -28,12 +28,13 @@ export const config: WebdriverIO.Config = {
     // will be called from there.
     //
     specs: [
-        './features/*.feature'
+        './src/main/features/SwitchWindows.feature'
     ],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
     ],
+
     //
     // ============
     // Capabilities
@@ -90,7 +91,7 @@ export const config: WebdriverIO.Config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    // logLevel: 'info',
     //
     // Set specific log levels per logger
     // loggers:
@@ -173,7 +174,7 @@ export const config: WebdriverIO.Config = {
     // If you are using Cucumber you need to specify the location of your step definitions.
     cucumberOpts: {
         // <string[]> (file/dir) require files before executing features
-        require: ['./step-definitions/*.ts'],
+        require: ['./src/main/step-definitions/*.ts'],
         // <boolean> show full backtrace for errors
         backtrace: false,
         // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
@@ -265,8 +266,8 @@ export const config: WebdriverIO.Config = {
      */
     beforeScenario: function (world, context) {
         browser.setTimeout({ 'pageLoad': 60000 });
-        const connection = require('../util/connection');
-        exports.connection = connection;
+        // const connection = require('../Utils/DBConnect');
+        // exports.connection = connection;
     },
     /**
      *

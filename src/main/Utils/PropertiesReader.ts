@@ -1,6 +1,6 @@
 let propertiesReader = require('properties-reader');
 let CryptoJS = require("crypto-js");
-let properties = propertiesReader('./properties/Database.properties');
+let properties = propertiesReader('./src/main/properties/Database.properties');
 
 export class PropertiesReader{
 

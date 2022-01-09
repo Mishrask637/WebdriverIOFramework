@@ -1,3 +1,6 @@
+import { Element } from 'webdriverio';
+import  {log}  from '../Logger/logger';
+
 export class UIActionLibrary{
 
     static async acceptAlert()
@@ -6,14 +9,17 @@ export class UIActionLibrary{
         if(await UIActionLibrary.isAlertPresent())
         {
            await browser.acceptAlert();
+           await log.info('Accepted the alert')
         }
         else{
             console.log("Alert Not Present");
+            await log.info('Alert Not Present');
         }
     }
     catch(error)
     {
         console.log("Alert Not Present");
+        await log.info('Alert Not Present');
     }
     }
 
@@ -23,14 +29,17 @@ export class UIActionLibrary{
         if(await UIActionLibrary.isAlertPresent())
         {
            await browser.dismissAlert();
+           await log.info('Alert Dismissed')
         }
         else{
             console.log("Alert Not Present");
+            await log.info('Alert Not Present');
         }
     }
     catch(error)
     {
         console.log("Alert Not Present");
+        await log.info('Alert Not Present');
     }
     }
 
@@ -53,50 +62,63 @@ export class UIActionLibrary{
         {
             await browser.sendAlertText(text);
         }
+        await log.info('Alert text set to '+text);
         await browser.pause(1000);
     }
 
     static async click(element)
     {
         await element.click();
+        await log.info('Clicked on element '+element.toString());
     }
 
     static async sendKeys(element,value)
     {
         await element.setValue(value);
+        await log.info('Value '+value+' set successfully');
     }
 
     static async clearAndSendKeys(element,value)
     {
         await element.clear();
+        await log.info('Text Field cleared successfully');
         await element.setValue(value);
+        await log.info('Value '+value+'set successfully');
     }
 
     static async clear(element)
     {
         await element.clear();
+        await log.info('Text Field cleared successfully');
     }
 
-    static async swicthTab()
+    static async swicthTab(element)
     {
         let tabSwitched = false;
         let currentWindow = await browser.getWindowHandle();
+        await log.info('Current window handle is '+currentWindow);
+        await UIActionLibrary.click(element);
         let totalWindows = await browser.getWindowHandles();
-
+        await log.info('Total available windows are '+currentWindow);
         for(let i=0;i<totalWindows.length;i++)
         {
-            if(currentWindow!==totalWindows[1])
+            if(currentWindow!==await totalWindows[1])
             {
                 await browser.switchToWindow(totalWindows[i]);
+                await log.info('Switched to window '+totalWindows[i]);
+                await log.info('Window Title is '+ await browser.getTitle());
+                tabSwitched=true;
                 break;
             }
         }
         if(tabSwitched)
         {
-            console.log("Tab switched")
+            console.log("Tab switched");
+            await log.info('Tab switched');
         }
         else{
             console.log("Did not swicth to any tab");
+            await log.info('Did not swicth to any tab');
         }
     }
 
@@ -104,22 +126,29 @@ export class UIActionLibrary{
     {
         let tabSwitched = false;
         let currentWindow = await browser.getWindowHandle();
+        await log.info('Current window handle is '+currentWindow);
         let totalWindows = await browser.getWindowHandles();
+        await log.info('Total available windows are '+currentWindow);
 
         for(let i=0;i<totalWindows.length;i++)
         {
             if(currentWindow!==totalWindows[1] && index === i)
             {
                 await browser.switchToWindow(totalWindows[i]);
+                await log.info('Switched to window '+totalWindows[i]);
+                await log.info('Window Title is '+ await browser.getTitle());
+                tabSwitched=true;
                 break;
             }
         }
         if(tabSwitched)
         {
-            console.log("Tab switched")
+            console.log("Tab switched");
+            await log.info('Tab switched');
         }
         else{
             console.log("Did not swicth to any tab");
+            await log.info('Did not swicth to any tab');
         }
     }
 
@@ -127,8 +156,9 @@ export class UIActionLibrary{
     {
         let tabSwitched = false;
         let currentWindow = await browser.getWindowHandle();
-
+        await log.info('Current window handle is '+currentWindow);
         let totalWindows = await browser.getWindowHandles();
+        await log.info('Total available windows are '+currentWindow);
 
         for(let i=0;i<totalWindows.length;i++)
         {
@@ -137,6 +167,9 @@ export class UIActionLibrary{
                 await browser.switchToWindow(totalWindows[i]);
                 if(browser.getTitle()===title)
                 {
+                    await log.info('Switched to window '+totalWindows[i]);
+                    await log.info('Window Title is '+ await browser.getTitle());
+                    tabSwitched=true;
                     break;
                 }
                 else{
@@ -147,10 +180,12 @@ export class UIActionLibrary{
         }
         if(tabSwitched)
         {
-            console.log("Tab switched")
+            console.log("Tab switched");
+            await log.info('Tab switched');
         }
         else{
             console.log("Did not swicth to any tab");
+            await log.info('Did not swicth to any tab');
         }
     }
 

@@ -4,6 +4,7 @@ import { ChainablePromiseElement, Element } from 'webdriverio';
 import click from 'webdriverio/build/commands/element/click';
 import { ExpectedWaits } from '../Utils/ExpectedWaits';
 import { UIActionLibrary } from '../Utils/UIActionLibrary';
+import {log} from '../Logger/logger';
 const uiActions = new UIActionLibrary();
 const expectedWaits = new ExpectedWaits();
 const prop = new PropertiesReader();
@@ -79,7 +80,7 @@ export class HomePage {
         }
         await browser.pause(1000);
         let userId = await UIActionLibrary.getAlertText();
-        console.log("Alert Text is "+userId);
+        log.info("Alert Text is "+userId);
         await UIActionLibrary.acceptAlert();
     }
 
@@ -115,14 +116,14 @@ export class HomePage {
     {
         await expectedWaits.waitForElementToBeDisplayed(await this.deleteButton,HomePage.timeOut);
         let colLength = await (await this.tableRow).length;
-        console.log("Column Length is "+colLength);
+        log.info("Column Length is "+colLength);
         let ColArray = [];
         for(let i=0;i<colLength;i++)
         {
             let array = {
                 col : this.tableRow[i].getText()
             }
-            console.log("Col Value is "+await array.col);
+            log.info("Col Value is "+await array.col);
             await ColArray.push(array.col);
         }
         await browser.pause(1000);

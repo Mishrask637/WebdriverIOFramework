@@ -4,10 +4,14 @@
   "description": "This is a cucumber webdriver-io Framework",
   "main": "index.js",
   "scripts": {
-    "test": "npx wdio ./config/wdio.conf.ts",
+    "test": "npx wdio ./src/main/config/wdio.conf.ts",
     "clean-port": "npx kill-port 4444",
     "selenium-standalone-install": "npm exec ./node_modules/selenium-standalone install",
-    "selenium-standalone-start": "npm exec ./node_modules/selenium-standalone start"
+    "selenium-standalone-start": "npm exec ./node_modules/selenium-standalone start",
+    "executeServer":"execute.sh",
+    "executeTests":"executeTests.sh",
+    "loadReport":"LoadReport.bat"
+
   },
   "author": "Suraj Mishra",
   "license": "ISC",
@@ -17,6 +21,7 @@
     "@wdio/cli": "^7.16.12",
     "@wdio/cucumber-framework": "^7.16.12",
     "@wdio/local-runner": "^7.16.12",
+    "@wdio/logger": "^7.16.0",
     "@wdio/selenium-standalone-service": "^7.16.11",
     "@wdio/spec-reporter": "^7.16.11",
     "allure-commandline": "^2.17.2",
@@ -26,6 +31,7 @@
     "crypto-js": "^4.1.1",
     "cucumber": "^6.0.5",
     "exceljs": "^4.3.0",
+    "loglevel": "^1.8.0",
     "mysql2": "^2.3.3",
     "papaparse": "^5.3.1",
     "properties-reader": "^2.2.0",
