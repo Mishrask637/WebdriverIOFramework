@@ -92,18 +92,49 @@ export class UIActionLibrary{
         await log.info('Text Field cleared successfully');
     }
 
-    static async swicthTab(element)
+    static async swicthTabUsingElement(element)
     {
         let tabSwitched = false;
         let currentWindow = await browser.getWindowHandle();
         await log.info('Current window handle is '+currentWindow);
         await UIActionLibrary.click(element);
         let totalWindows = await browser.getWindowHandles();
-        await log.info('Total available windows are '+currentWindow);
+        await log.info('Total available windows are '+totalWindows);
         for(let i=0;i<totalWindows.length;i++)
         {
             if(currentWindow!==await totalWindows[1])
             {
+                await browser.switchToWindow(totalWindows[i]);
+                await log.info('Switched to window '+totalWindows[i]);
+                await log.info('Window Title is '+ await browser.getTitle());
+                tabSwitched=true;
+                break;
+            }
+        }
+        if(tabSwitched)
+        {
+            console.log("Tab switched");
+            await log.info('Tab switched');
+        }
+        else{
+            console.log("Did not swicth to any tab");
+            await log.info('Did not swicth to any tab');
+        }
+    }
+
+    static async swicthTab()
+    {
+        let tabSwitched = false;
+        let currentWindow = await browser.getWindowHandle();
+        await log.info('Current window handle is '+currentWindow);
+        let totalWindows = await browser.getWindowHandles();
+        await log.info('Total available windows are '+totalWindows);
+        for(let i=0;i<totalWindows.length;i++)
+        {
+            console.log("Window of "+i +"= "+await totalWindows[i])
+            if(currentWindow !== await totalWindows[i])
+            {
+                console.log("I Value is "+i);
                 await browser.switchToWindow(totalWindows[i]);
                 await log.info('Switched to window '+totalWindows[i]);
                 await log.info('Window Title is '+ await browser.getTitle());
@@ -128,11 +159,11 @@ export class UIActionLibrary{
         let currentWindow = await browser.getWindowHandle();
         await log.info('Current window handle is '+currentWindow);
         let totalWindows = await browser.getWindowHandles();
-        await log.info('Total available windows are '+currentWindow);
+        await log.info('Total available windows are '+totalWindows);
 
         for(let i=0;i<totalWindows.length;i++)
         {
-            if(currentWindow!==totalWindows[1] && index === i)
+            if(currentWindow!==totalWindows[i] && index === i)
             {
                 await browser.switchToWindow(totalWindows[i]);
                 await log.info('Switched to window '+totalWindows[i]);
@@ -158,14 +189,14 @@ export class UIActionLibrary{
         let currentWindow = await browser.getWindowHandle();
         await log.info('Current window handle is '+currentWindow);
         let totalWindows = await browser.getWindowHandles();
-        await log.info('Total available windows are '+currentWindow);
+        await log.info('Total available windows are '+totalWindows);
 
         for(let i=0;i<totalWindows.length;i++)
         {
-            if(currentWindow!==totalWindows[1])
+            if(currentWindow!==totalWindows[i])
             {
                 await browser.switchToWindow(totalWindows[i]);
-                if(browser.getTitle()===title)
+                if(browser.getTitle()===title ||  (await browser.getTitle()).includes(title))
                 {
                     await log.info('Switched to window '+totalWindows[i]);
                     await log.info('Window Title is '+ await browser.getTitle());
@@ -203,5 +234,20 @@ export class UIActionLibrary{
             }
           }
         };
+      }
+
+      static async moveTo(element)
+      {
+        await element.moveTo();
+      }
+
+      static async scrollIntoView(element)
+      {
+        await element.scrollIntoView();
+      }
+
+      static async moveToAndClick(element)
+      {
+        await element.moveTo().click();
       }
 }

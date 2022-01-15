@@ -14,4 +14,6 @@ When(/^user clicks on Open New Tabs Link$/, async() => {
 Then(/^user clicks on click button$/, async() => {
 	await switchWindows.clickOnClickButton();
     await switchWindows.switchbackToSwitchPage();
+	await switchWindows.moveToSwitchToTab();
+	await switchWindows.clickOnRegister();
 });

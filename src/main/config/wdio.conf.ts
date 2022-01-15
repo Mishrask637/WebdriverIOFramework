@@ -353,7 +353,7 @@ export const config: WebdriverIO.Config = {
         return await new Promise<void>(async (resolve, reject) => {
             const generationTimeout = await setTimeout(
                 async() => await reject(reportError),
-                60000)
+                300000)
 
             generation.on('exit', async function(exitCode) {
                 await clearTimeout(generationTimeout)
