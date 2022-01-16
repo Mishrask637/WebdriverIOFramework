@@ -29,6 +29,11 @@ export class Register{
     confirmPassword = $('#secondpassword');
     submit = $('#submitbtn');
 
+    get hobbies()
+    {
+        return $$('.checks');
+    }
+
 
     async enterFullName(data:DataTable)
     {
@@ -75,6 +80,8 @@ export class Register{
 
     async selectHobbies(data:DataTable)
     {
+        let numberOfHobbies = await this.hobbies.length;
+        console.log("Number of hobbies are "+numberOfHobbies);
         let hobby = await data.raw().toString();
         await log.info('hobby Value is '+hobby);
         if(hobby=='Cricket')
@@ -97,14 +104,15 @@ export class Register{
     async selectSkill(data:DataTable)
     {
         let skill = await data.raw().toString();
-        await log.info('hobby Value is '+skill);
+        await log.info('Skill Value is '+skill);
         await this.skills.selectByVisibleText(skill);
     }
 
     async selectCountry(data:DataTable)
     {
+        await UIActionLibrary.scrollIntoView(await this.submit);
         let country = await data.raw().toString();
-        await log.info('hobby Value is '+country);
+        await log.info('Country Value is '+country);
         await UIActionLibrary.click(await this.country);
         await UIActionLibrary.sendKeys(await this.search,country);
         await UIActionLibrary.click(await this.countryValue);
@@ -135,6 +143,7 @@ export class Register{
     async clickOnSubmit()
     {
         await UIActionLibrary.click(this.submit)
+        await browser.pause(5000);
     }
 
     async goToDemoSite()

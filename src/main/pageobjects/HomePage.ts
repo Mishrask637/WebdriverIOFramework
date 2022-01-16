@@ -20,11 +20,16 @@ export class HomePage {
     processButton = $("//button[text()='Process']");
     customerDropdownOptions = $('#userSelect');
     currencyDropdownOptions = $("#currency");
-    searchField = $("//input[@placeholder='Search Customer']");
-    tableRow = $$("//tr[@class='ng-scope']/td");
+    searchField = $("//input[@placeholder='Search Customerr']");
     deleteButton = $("//button[text()='Delete']");
     static timeOut = 10000;
     implicitTimeout = 10000;
+
+
+    get tableRow()
+    {
+        return $$("//table/tbody/tr/td");
+    }
 
     async clickOnTab(tabname)
     {
@@ -108,7 +113,6 @@ export class HomePage {
     {
         await expectedWaits.waitForElementToBeDisplayed(await this.searchField,HomePage.timeOut);
         await UIActionLibrary.sendKeys(await this.searchField,customerName);
-        // await this.searchField.setValue(customerName);
         await browser.pause(1000);
     }
 

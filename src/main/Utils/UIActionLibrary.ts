@@ -1,4 +1,3 @@
-import { Element } from 'webdriverio';
 import  {log}  from '../Logger/logger';
 
 export class UIActionLibrary{
