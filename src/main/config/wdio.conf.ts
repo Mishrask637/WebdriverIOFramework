@@ -7,7 +7,47 @@ const allure = require('allure-commandline')
 
 import { Capabilities } from '@wdio/types';
 import {ReportAggregator, HtmlReporter} from 'wdio-html-nice-reporter';
+import { Reporter } from '../Reporter/Reporter';
+import * as path from 'path'
+import cucumberJson from 'wdio-cucumberjs-json-reporter';
+const jsonReports = path.join(process.cwd(),"/reports/json");
+const htmlReports = path.join(process.cwd(),"/reports/html");
+const today = new Date();
+const timestamp = today.getMonth()+ '' +today.getDate()+ '' + today.getFullYear() + "_"+today.getHours()+today.getMinutes()+today.getSeconds();
+const { removeSync } = require('fs-extra');
 let reportAggregator: ReportAggregator;
+let baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword;
+let ENV = process.env.ENV;
+
+if (ENV === 'test') {
+    baseUrl = 'https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager';
+    database = 'mysql'
+    dbhostname = 'localhost'
+    dbusername = 'john'
+    dbpassword = '',
+    appUsername='',
+    appPassword=''
+}
+else if (ENV === 'dev') {
+    baseUrl = 'http://demo.automationtesting.in/Register.html';
+    database = 'mysql'
+    dbhostname = 'localhost'
+    dbusername = 'john'
+    dbpassword = '',
+    appUsername='',
+    appPassword=''
+}
+else if (ENV === 'stage') {
+    baseUrl = 'http://demo.automationtesting.in/Windows.html';
+    database = 'mysql'
+    dbhostname = 'localhost'
+    dbusername = 'john'
+    dbpassword = '',
+    appUsername='',
+    appPassword=''
+}
+
+export {baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword}
 
 export const config: WebdriverIO.Config = {
     //
@@ -31,6 +71,7 @@ export const config: WebdriverIO.Config = {
     // then the current working directory is where your `package.json` resides, so `wdio`
     // will be called from there.
     //
+    
     specs: [
         './src/main/features/HomePage.feature'
     ],
@@ -138,7 +179,8 @@ export const config: WebdriverIO.Config = {
     // commands. Instead, they hook themselves up into the test process.
     // services: ['chromedriver'],
     /* services: [
-        ['selenium-standalone', {
+        ['selenium-standalone',
+        {
             logPath: 'logs',
             installArgs: { drivers }, // drivers to install
             args: { drivers } // drivers to use
@@ -173,7 +215,11 @@ export const config: WebdriverIO.Config = {
     // see also: https://webdriver.io/docs/dot-reporter
     // reporters: ['spec',['allure', {outputDir: 'allure-results'}],'cucumber','html'],
     reporters: ['spec',['allure', {outputDir: 'allure-results'}],
-    ["html-nice", {outputDir: './reports/html-reports/'}]],
+    [ 'cucumberjs-json', {
+        jsonFolder: './reports/json',
+        language: 'en'
+    },],    
+    ],
 
     //
     // If you are using Cucumber you need to specify the location of your step definitions.
@@ -223,9 +269,12 @@ export const config: WebdriverIO.Config = {
             browserName: 'Chrome',
             collapseTests: true,
             linkScreenshots:true
-          });
-
-         reportAggregator.clean();
+        });
+        removeSync(htmlReports);
+        removeSync(jsonReports);
+        Reporter.createDirectory(jsonReports);
+        Reporter.createDirectory(htmlReports);
+        reportAggregator.clean();
     },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
@@ -307,6 +356,7 @@ export const config: WebdriverIO.Config = {
     afterStep: async function (step, scenario, result, context) {
             if (await result.passed === false) {
               await browser.takeScreenshot();
+              cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
             }
     },
     /**
@@ -365,6 +415,7 @@ export const config: WebdriverIO.Config = {
     onComplete: async function(exitCode, config, capabilities, results) {
 
         await reportAggregator.createReport();
+        await Reporter.createHtmlReport();
         const reportError = await new Error('Could not generate Allure report')
         const generation = await allure(['generate', 'allure-results', '--clean'])
         return await new Promise<void>(async (resolve, reject) => {

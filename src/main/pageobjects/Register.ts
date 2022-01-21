@@ -1,7 +1,9 @@
-import { DataTable } from "@wdio/cucumber-framework/node_modules/@cucumber/cucumber";
 import { UIActionLibrary } from "../Utils/UIActionLibrary";
 import { log } from "../Logger/logger";
 import { PropertiesReader } from "../Utils/PropertiesReader";
+import { ReadConfig } from '../config/ReadConfig';
+import { DataTable } from "@cucumber/cucumber";
+const readConf = new ReadConfig();
 
 const prop = new PropertiesReader();
 
@@ -148,7 +150,7 @@ export class Register{
 
     async goToDemoSite()
     {
-        let url = await prop.getProperty("demositeurl");
+        let url = await readConf.getbaseUrl();
         await browser.url(url);
         await browser.maximizeWindow();
     }

@@ -1,5 +1,5 @@
 import { PropertiesReader } from './../Utils/PropertiesReader';
-import { IndexKind } from 'typescript';
+import { ReadConfig } from '../config/ReadConfig';
 import { ChainablePromiseElement, Element } from 'webdriverio';
 import click from 'webdriverio/build/commands/element/click';
 import { ExpectedWaits } from '../Utils/ExpectedWaits';
@@ -8,6 +8,7 @@ import {log} from '../Logger/logger';
 const uiActions = new UIActionLibrary();
 const expectedWaits = new ExpectedWaits();
 const prop = new PropertiesReader();
+const readConf = new ReadConfig();
 export class HomePage {
 
     addCustomerTab = $("//button[contains(text(),'Add Customer')]");
@@ -91,7 +92,7 @@ export class HomePage {
 
     async navigateToManagerLoginHomepage()
     {
-        let uri = await prop.getProperty('uri');
+        let uri = await readConf.getbaseUrl();
         await browser.url(uri);
         await browser.maximizeWindow();
         await browser.setTimeout({'implicit': this.implicitTimeout });

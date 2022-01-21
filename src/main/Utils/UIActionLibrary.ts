@@ -11,13 +11,13 @@ export class UIActionLibrary{
            await log.info('Accepted the alert')
         }
         else{
-            console.log("Alert Not Present");
+            
             await log.info('Alert Not Present');
         }
     }
     catch(error)
     {
-        console.log("Alert Not Present");
+        
         await log.info('Alert Not Present');
     }
     }
@@ -31,13 +31,13 @@ export class UIActionLibrary{
            await log.info('Alert Dismissed')
         }
         else{
-            console.log("Alert Not Present");
+            
             await log.info('Alert Not Present');
         }
     }
     catch(error)
     {
-        console.log("Alert Not Present");
+        
         await log.info('Alert Not Present');
     }
     }
@@ -112,11 +112,9 @@ export class UIActionLibrary{
         }
         if(tabSwitched)
         {
-            console.log("Tab switched");
-            await log.info('Tab switched');
+                    await log.info('Tab switched');
         }
         else{
-            console.log("Did not swicth to any tab");
             await log.info('Did not swicth to any tab');
         }
     }
@@ -130,10 +128,10 @@ export class UIActionLibrary{
         await log.info('Total available windows are '+totalWindows);
         for(let i=0;i<totalWindows.length;i++)
         {
-            console.log("Window of "+i +"= "+await totalWindows[i])
+            log.info("Window of "+i +"= "+await totalWindows[i])
             if(currentWindow !== await totalWindows[i])
             {
-                console.log("I Value is "+i);
+                log.info("I Value is "+i);
                 await browser.switchToWindow(totalWindows[i]);
                 await log.info('Switched to window '+totalWindows[i]);
                 await log.info('Window Title is '+ await browser.getTitle());
@@ -143,11 +141,9 @@ export class UIActionLibrary{
         }
         if(tabSwitched)
         {
-            console.log("Tab switched");
-            await log.info('Tab switched');
+                    await log.info('Tab switched');
         }
         else{
-            console.log("Did not swicth to any tab");
             await log.info('Did not swicth to any tab');
         }
     }
@@ -173,11 +169,9 @@ export class UIActionLibrary{
         }
         if(tabSwitched)
         {
-            console.log("Tab switched");
-            await log.info('Tab switched');
+                    await log.info('Tab switched');
         }
         else{
-            console.log("Did not swicth to any tab");
             await log.info('Did not swicth to any tab');
         }
     }
@@ -210,11 +204,9 @@ export class UIActionLibrary{
         }
         if(tabSwitched)
         {
-            console.log("Tab switched");
-            await log.info('Tab switched');
+                    await log.info('Tab switched');
         }
         else{
-            console.log("Did not swicth to any tab");
             await log.info('Did not swicth to any tab');
         }
     }
@@ -223,7 +215,6 @@ export class UIActionLibrary{
         return async function() {
           try {
             await this.getAlertText();
-      
             return true;
           } catch (error) {
             if (error.name === 'no such alert') {
@@ -238,15 +229,18 @@ export class UIActionLibrary{
       static async moveTo(element)
       {
         await element.moveTo();
+        await log.info("Moved to element "+element.toString());
       }
 
       static async scrollIntoView(element)
       {
         await element.scrollIntoView();
+        await log.info("Scrolled to element "+element.toString());
       }
 
       static async moveToAndClick(element)
       {
         await element.moveTo().click();
+        await log.info("Moved and clicked on element "+element.toString())
       }
 }

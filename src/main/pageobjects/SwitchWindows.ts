@@ -1,6 +1,7 @@
 import { UIActionLibrary } from './../Utils/UIActionLibrary';
 import { PropertiesReader } from "../Utils/PropertiesReader";
-
+import { ReadConfig } from '../config/ReadConfig';
+const readConf = new ReadConfig();
 const prop = new PropertiesReader();
 
 export class SwitchWindows{
@@ -14,7 +15,7 @@ export class SwitchWindows{
     submitbtn = $('#submitbtn');
     async goToSwitchTabPage()
     {
-        let url = await prop.getProperty('switchTabUrl');
+        let url = await readConf.getbaseUrl();
         await browser.url(url);
         browser.maximizeWindow();
     }
