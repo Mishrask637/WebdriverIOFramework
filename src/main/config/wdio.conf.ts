@@ -3,21 +3,25 @@ const drivers = {
     firefox: { version: '0.30.0' }, // https://github.com/mozilla/geckodriver/releases
     chromiumedge: { version: '96.0.1054.62' } // https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
 }
-const allure = require('allure-commandline')
 
-import { Capabilities } from '@wdio/types';
+
 import {ReportAggregator, HtmlReporter} from 'wdio-html-nice-reporter';
 import { Reporter } from '../Reporter/Reporter';
 import * as path from 'path'
 import cucumberJson from 'wdio-cucumberjs-json-reporter';
+
 const jsonReports = path.join(process.cwd(),"/reports/json");
 const htmlReports = path.join(process.cwd(),"/reports/html");
 const today = new Date();
 const timestamp = today.getMonth()+ '' +today.getDate()+ '' + today.getFullYear() + "_"+today.getHours()+today.getMinutes()+today.getSeconds();
 const { removeSync } = require('fs-extra');
-let reportAggregator: ReportAggregator;
+const allure = require('allure-commandline')
+
+let reportAggregator:ReportAggregator;
 let baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword;
 let ENV = process.env.ENV;
+
+
 
 if (ENV === 'test') {
     baseUrl = 'https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager';
@@ -47,7 +51,15 @@ else if (ENV === 'stage') {
     appPassword=''
 }
 
-export {baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword}
+export {
+    baseUrl,
+    database,
+    dbhostname,
+    dbusername,
+    dbpassword,
+    appUsername,
+    appPassword
+}
 
 export const config: WebdriverIO.Config = {
     //
@@ -160,7 +172,8 @@ export const config: WebdriverIO.Config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: 'https://www.globalsqa.com',
+    // baseUrl: 'https://www.globalsqa.com',
+    baseUrl,
     //
     // Default timeout for all waitFor* commands.
     waitforTimeout: 10000,
@@ -217,7 +230,8 @@ export const config: WebdriverIO.Config = {
     reporters: ['spec',['allure', {outputDir: 'allure-results'}],
     [ 'cucumberjs-json', {
         jsonFolder: './reports/json',
-        language: 'en'
+        language: 'en',
+        fileName:'DemoProject_'+timestamp+'.json'
     },],    
     ],
 
@@ -414,7 +428,7 @@ export const config: WebdriverIO.Config = {
      */
     onComplete: async function(exitCode, config, capabilities, results) {
 
-        await reportAggregator.createReport();
+        // await reportAggregator.createReport();
         await Reporter.createHtmlReport();
         const reportError = await new Error('Could not generate Allure report')
         const generation = await allure(['generate', 'allure-results', '--clean'])
@@ -443,3 +457,4 @@ export const config: WebdriverIO.Config = {
     //onReload: function(oldSessionId, newSessionId) {
     //}
 }
+

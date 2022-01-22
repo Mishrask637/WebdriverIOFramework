@@ -112,7 +112,7 @@ export class UIActionLibrary{
         }
         if(tabSwitched)
         {
-                    await log.info('Tab switched');
+            await log.info('Tab switched');
         }
         else{
             await log.info('Did not swicth to any tab');
@@ -141,7 +141,7 @@ export class UIActionLibrary{
         }
         if(tabSwitched)
         {
-                    await log.info('Tab switched');
+            await log.info('Tab switched');
         }
         else{
             await log.info('Did not swicth to any tab');
@@ -169,7 +169,7 @@ export class UIActionLibrary{
         }
         if(tabSwitched)
         {
-                    await log.info('Tab switched');
+            await log.info('Tab switched');
         }
         else{
             await log.info('Did not swicth to any tab');
@@ -204,7 +204,7 @@ export class UIActionLibrary{
         }
         if(tabSwitched)
         {
-                    await log.info('Tab switched');
+            await log.info('Tab switched');
         }
         else{
             await log.info('Did not swicth to any tab');

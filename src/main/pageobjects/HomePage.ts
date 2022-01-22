@@ -21,7 +21,7 @@ export class HomePage {
     processButton = $("//button[text()='Process']");
     customerDropdownOptions = $('#userSelect');
     currencyDropdownOptions = $("#currency");
-    searchField = $("//input[@placeholder='Search Customerr']");
+    searchField = $("//input[@placeholder='Search Customer']");
     deleteButton = $("//button[text()='Delete']");
     static timeOut = 10000;
     implicitTimeout = 10000;

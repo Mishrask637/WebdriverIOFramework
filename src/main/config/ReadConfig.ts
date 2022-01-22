@@ -1,5 +1,8 @@
 import {baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword} from './wdio.conf'
 
+// import {vars} from './wdio.conf'
+
+
 
 export class ReadConfig{
 
