@@ -1,3 +1,5 @@
+// import { DataTable } from '@wdio/cucumber-framework/node_modules/@cucumber/cucumber';
+import { DataTable } from '@cucumber/cucumber';
 import  {log}  from '../Logger/logger';
 
 export class UIActionLibrary{
@@ -11,13 +13,11 @@ export class UIActionLibrary{
            await log.info('Accepted the alert')
         }
         else{
-            
             await log.info('Alert Not Present');
         }
     }
     catch(error)
     {
-        
         await log.info('Alert Not Present');
     }
     }
@@ -31,13 +31,11 @@ export class UIActionLibrary{
            await log.info('Alert Dismissed')
         }
         else{
-            
             await log.info('Alert Not Present');
         }
     }
     catch(error)
     {
-        
         await log.info('Alert Not Present');
     }
     }
@@ -68,7 +66,7 @@ export class UIActionLibrary{
     static async click(element)
     {
         await element.click();
-        await log.info('Clicked on element '+element.toString());
+        await log.info('Clicked on element '+await element.toString());
     }
 
     static async sendKeys(element,value)
@@ -229,18 +227,43 @@ export class UIActionLibrary{
       static async moveTo(element)
       {
         await element.moveTo();
-        await log.info("Moved to element "+element.toString());
+        await log.info("Moved to element "+await element.toString());
       }
 
       static async scrollIntoView(element)
       {
         await element.scrollIntoView();
-        await log.info("Scrolled to element "+element.toString());
+        await log.info("Scrolled to element "+await element.toString());
       }
 
       static async moveToAndClick(element)
       {
         await element.moveTo().click();
-        await log.info("Moved and clicked on element "+element.toString())
+        await log.info("Moved and clicked on element "+await element.toString())
+      }
+
+      static async hashes(datatable:DataTable)
+      { 
+        return await datatable.hashes();
+      }
+
+      static async rowsHash(datatable:DataTable)
+      { 
+        return await datatable.rowsHash();
+      }
+
+      static async rows(datatable:DataTable)
+      { 
+        return await datatable.rows();
+      }
+
+      static async raw(datatable:DataTable)
+      { 
+        return await datatable.raw();
+      }
+
+      static async transpose(datatable:DataTable)
+      {
+        return await datatable.transpose();
       }
 }

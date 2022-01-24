@@ -25,7 +25,7 @@ export class ExcelReader{
         let wb = await this.getWorkbookObject(filePath);
         let sheetObj:Worksheet = await wb.getWorksheet(sheetName);
         let row = await sheetObj.getRow(rowNum);
-        for(let i=0;i<row.cellCount;i++)
+        for(let i=1;i<=row.cellCount;i++)
         {
             let values={
                 array:await row.getCell(i).value
@@ -48,11 +48,11 @@ export class ExcelReader{
         let totalRowCount = await sheetObj.rowCount;
         let totalColCount;
 
-        for(let i=0;i<totalRowCount;i++)
+        for(let i=1;i<=totalRowCount;i++)
         {
             totalColCount = await sheetObj.getRow(i).cellCount;
 
-            for(let j=0;j<totalColCount;j++)
+            for(let j=1;j<=totalColCount;j++)
             {
                 let values={
                     array:await sheetObj.getRow(i).getCell(j).value

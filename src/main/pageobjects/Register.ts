@@ -8,7 +8,7 @@ const readConf = new ReadConfig();
 const prop = new PropertiesReader();
 
 
-export class Register{
+export class Register {
 
     firstName = $("//input[@placeholder='First Name']");
     lastName = $("//input[@placeholder='Last Name']");
@@ -31,125 +31,113 @@ export class Register{
     confirmPassword = $('#secondpassword');
     submit = $('#submitbtn');
 
-    get hobbies()
-    {
+    get hobbies() {
         return $$('.checks');
     }
 
 
-    async enterFullName(data:DataTable)
-    {
-        let rows = await data.hashes();
+    async enterFullName(data: DataTable) {
+        // let rows = await data.hashes();
+        let rows = await UIActionLibrary.hashes(data);
         let firstName = await rows[0].FirstName;
         let lastname = await rows[0].LastName;
-        await UIActionLibrary.sendKeys(this.firstName,firstName);
-        await UIActionLibrary.sendKeys(this.lastName,lastname);
+        await UIActionLibrary.sendKeys(this.firstName, firstName);
+        await UIActionLibrary.sendKeys(this.lastName, lastname);
     }
 
-    async enterAddress(data:DataTable){
-        let rows = await data.hashes();
+    async enterAddress(data: DataTable) {
+        // let rows = await data.hashes();
+        let rows = await UIActionLibrary.hashes(data);
         let address = await rows[0].Address;
-        await UIActionLibrary.sendKeys(this.address,address);
+        await UIActionLibrary.sendKeys(this.address, address);
     }
 
-    async enterEmail(data:DataTable)
-    {
-        let rows = await data.hashes();
+    async enterEmail(data: DataTable) {
+        // let rows = await data.hashes();
+        let rows = await UIActionLibrary.hashes(data);
         let emailAddress = await rows[0].Email;
-        await UIActionLibrary.sendKeys(this.email,emailAddress);
+        await UIActionLibrary.sendKeys(this.email, emailAddress);
     }
 
-    async enterPhone(data:DataTable)
-    {
-        let rows = await data.hashes();
+    async enterPhone(data: DataTable) {
+        // let rows = await data.hashes();
+        let rows = await UIActionLibrary.hashes(data);
         let phone = await rows[0].PhoneNumber;
-        await UIActionLibrary.sendKeys(this.phone,phone);
+        await UIActionLibrary.sendKeys(this.phone, phone);
     }
 
-    async selectGender(data:DataTable)
-    {
-        let rows = await data.hashes();
+    async selectGender(data: DataTable) {
+        // let rows = await data.hashes();
+        let rows = await UIActionLibrary.hashes(data);
         let gender = await rows[0].Gender;
-        if(gender=='Male')
-        {
+        if (gender == 'Male') {
             await UIActionLibrary.click(await this.male);
         }
-        if(gender=='female')
-        {
+        if (gender == 'female') {
             await UIActionLibrary.click(await this.female);
         }
     }
 
-    async selectHobbies(data:DataTable)
-    {
+    async selectHobbies(data: DataTable) {
         let numberOfHobbies = await this.hobbies.length;
-        console.log("Number of hobbies are "+numberOfHobbies);
+        console.log("Number of hobbies are " + numberOfHobbies);
         let hobby = await data.raw().toString();
-        await log.info('hobby Value is '+hobby);
-        if(hobby=='Cricket')
-        {
+        await log.info('hobby Value is ' + hobby);
+        if (hobby == 'Cricket') {
             await UIActionLibrary.click(await this.cricket);
         }
     }
 
-    async selectlanguage(data:DataTable)
-    {
+    async selectlanguage(data: DataTable) {
         let language = await data.raw().toString();
-        await log.info('language Value is '+language);
+        await log.info('language Value is ' + language);
         await UIActionLibrary.click(this.language);
-        if(language=='English')
-        {
+        if (language == 'English') {
             await UIActionLibrary.click(await this.english);
-        }   
+        }
     }
 
-    async selectSkill(data:DataTable)
-    {
+    async selectSkill(data: DataTable) {
         let skill = await data.raw().toString();
-        await log.info('Skill Value is '+skill);
+        await log.info('Skill Value is ' + skill);
         await this.skills.selectByVisibleText(skill);
     }
 
-    async selectCountry(data:DataTable)
-    {
+    async selectCountry(data: DataTable) {
         await UIActionLibrary.scrollIntoView(await this.submit);
         let country = await data.raw().toString();
-        await log.info('Country Value is '+country);
+        await log.info('Country Value is ' + country);
         await UIActionLibrary.click(await this.country);
-        await UIActionLibrary.sendKeys(await this.search,country);
+        await UIActionLibrary.sendKeys(await this.search, country);
         await UIActionLibrary.click(await this.countryValue);
     }
 
-    async selectDateOfBirth(data:DataTable)
-    {
-        let rows = await data.hashes();
+    async selectDateOfBirth(data: DataTable) {
+        // let rows = await data.hashes();
+        let rows = await UIActionLibrary.hashes(data);
         let Year = await rows[0].Year;
         let Month = await rows[0].Month;
         let Date = await rows[0].Date;
 
         await this.birthYear.selectByVisibleText(Year);
         await this.birthMonth.selectByVisibleText(Month);
-        await this.birthDate.selectByVisibleText(Date);                
+        await this.birthDate.selectByVisibleText(Date);
     }
 
-    async enterPassword(password)
-    {
-        await UIActionLibrary.sendKeys(this.password,password);
+    async enterPassword(password) {
+        await UIActionLibrary.sendKeys(this.password, password);
     }
 
-    async enterConfirmPassword(password)
-    {
-        await UIActionLibrary.sendKeys(this.confirmPassword,password);
+    async enterConfirmPassword(password) {
+        await UIActionLibrary.sendKeys(this.confirmPassword, password);
     }
 
-    async clickOnSubmit()
-    {
+    async clickOnSubmit() {
         await UIActionLibrary.click(this.submit)
         await browser.pause(5000);
     }
 
-    async goToDemoSite()
-    {
+    async goToDemoSite() {
         let url = await readConf.getbaseUrl();
         await browser.url(url);
         await browser.maximizeWindow();

@@ -9,7 +9,6 @@ import {ReportAggregator, HtmlReporter} from 'wdio-html-nice-reporter';
 import { Reporter } from '../Reporter/Reporter';
 import * as path from 'path'
 import cucumberJson from 'wdio-cucumberjs-json-reporter';
-
 const jsonReports = path.join(process.cwd(),"/reports/json");
 const htmlReports = path.join(process.cwd(),"/reports/html");
 const today = new Date();
@@ -18,7 +17,7 @@ const { removeSync } = require('fs-extra');
 const allure = require('allure-commandline')
 
 let reportAggregator:ReportAggregator;
-let baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword;
+let baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword,spec;
 let ENV = process.env.ENV;
 
 
@@ -30,7 +29,9 @@ if (ENV === 'test') {
     dbusername = 'john'
     dbpassword = '',
     appUsername='',
-    appPassword=''
+    appPassword='',
+    spec='./src/main/features/HomePage.feature'
+
 }
 else if (ENV === 'dev') {
     baseUrl = 'http://demo.automationtesting.in/Register.html';
@@ -39,7 +40,8 @@ else if (ENV === 'dev') {
     dbusername = 'john'
     dbpassword = '',
     appUsername='',
-    appPassword=''
+    appPassword='',
+    spec='./src/main/features/Register.feature'
 }
 else if (ENV === 'stage') {
     baseUrl = 'http://demo.automationtesting.in/Windows.html';
@@ -48,7 +50,13 @@ else if (ENV === 'stage') {
     dbusername = 'john'
     dbpassword = '',
     appUsername='',
-    appPassword=''
+    appPassword='',
+    spec='./src/main/features/SwitchWindows.feature'
+}
+else
+{
+    console.log('Please enter a proper ENV value');
+    process.exit();
 }
 
 export {
@@ -85,7 +93,8 @@ export const config: WebdriverIO.Config = {
     //
     
     specs: [
-        './src/main/features/HomePage.feature'
+        // './src/main/features/HomePage.feature'
+        spec
     ],
     // Patterns to exclude.
     exclude: [
@@ -139,8 +148,22 @@ export const config: WebdriverIO.Config = {
         maxInstances: 1,
         browserName: 'MicrosoftEdge',
         acceptInsecureCerts: true
+    }, */
+    /* {
+        browserName: 'chrome',
+        platformName: 'Windows 10',
+        browserVersion: 'latest',
+        maxInstances: 1,
+        'sauce:options': {
+            tunnelIdentifier: 'ParentTunnelName',
+            parentTunnel: '<username of parent>',
+            build: 'your-build-name',
+            screenResolution: '1600x1200',
+        }
     } */
 ],
+
+
     //
     // ===================
     // Test Configurations
@@ -183,7 +206,7 @@ export const config: WebdriverIO.Config = {
     connectionRetryTimeout: 120000,
     //
     // Default request retries count
-    connectionRetryCount: 3,
+    // connectionRetryCount: 3,
 
     //
     // Test runner services
@@ -276,19 +299,19 @@ export const config: WebdriverIO.Config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      */
     onPrepare: function (config, capabilities) {
-        reportAggregator = new ReportAggregator({
+        /* reportAggregator = new ReportAggregator({
             outputDir: './reports/html-reports/',
             filename: 'master-report.html',
             reportTitle: 'Master Report',
             browserName: 'Chrome',
             collapseTests: true,
             linkScreenshots:true
-        });
+        }); */
+        // reportAggregator.clean();
         removeSync(htmlReports);
         removeSync(jsonReports);
         Reporter.createDirectory(jsonReports);
         Reporter.createDirectory(htmlReports);
-        reportAggregator.clean();
     },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service

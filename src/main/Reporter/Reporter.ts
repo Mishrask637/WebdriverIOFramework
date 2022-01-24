@@ -9,7 +9,7 @@ const today = new Date();
 const timestamp = today.getMonth()+ '' +today.getDate()+ '' + today.getFullYear() + "_"+today.getHours()+today.getMinutes()+today.getSeconds();
 const targetJson = jsonReports+"/automation-demo-site-regtsitration-feature.json"
 const targetHtml = htmlReports+"/automation-demo-site-regtsitration-feature.html"
-const FileName = htmlReports+"/_DemoProject_"+timestamp+".html";
+const FileName = htmlReports+"/DemoProject_"+timestamp+".html";
 
 const cucumberReporterOptions = {
     jsonDir:jsonReports,

@@ -1,6 +1,6 @@
 const fs = require('fs')
 const csvParser = require('papaparse')
-let parsedFile;
+import  {log}  from '../Logger/logger';
 
 export class CSVReader{
 
@@ -10,7 +10,7 @@ static headerNamesMap;
     async parseCSVFile(filePath)
     {
         let file = await fs.readFileSync(filePath,'utf8')
-        parsedFile = await csvParser.parse(file,{
+        let parsedFile = await csvParser.parse(file,{
             delimeter:',',
             complete:(csvValues)=>{
                 return csvValues;
@@ -22,7 +22,7 @@ static headerNamesMap;
     async parseCSVFileWithNewLine(filePath)
     {
         let file = await fs.readFileSync(filePath,'utf8')
-        parsedFile = await csvParser.parse(file,{
+        let parsedFile = await csvParser.parse(file,{
             delimeter:'\r\n',
             complete:(csvValues)=>{
                 return csvValues;
@@ -34,7 +34,7 @@ static headerNamesMap;
     async parseCSVFileWithHeaders(filePath)
     {
         let file = await fs.readFileSync(filePath,'utf8')
-        parsedFile = await csvParser.parse(file,{
+        let parsedFile = await csvParser.parse(file,{
             header:true,
             delimeter:',',
             complete:(csvValues)=>{
@@ -53,7 +53,7 @@ static headerNamesMap;
         }
         catch(error)
         {
-            console.log("Could not parse the file "+filePath +"\r\n"+
+            log.info("Could not parse the file "+filePath +"\r\n"+
             "Error is "+error);
             value = "";
         }
@@ -69,7 +69,7 @@ static headerNamesMap;
         }
         catch(error)
         {
-            console.log("Could not parse the file "+filePath +"\r\n"+
+            log.info("Could not parse the file "+filePath +"\r\n"+
             "Error is "+error);
             value = "";
         }
@@ -78,18 +78,18 @@ static headerNamesMap;
 
     async getTotalRowsWithHeaders(filePath)
     {
-        let value;
+        let rowsvalue;
         try{
             let parsedFile = await this.parseCSVFileWithHeaders(filePath);
-            value = await parsedFile.data.length;
+            rowsvalue = await parsedFile.data.length;
         }
         catch(error)
         {
-            console.log("Could not parse the file "+filePath +"\r\n"+
+            log.info("Could not parse the file "+filePath +"\r\n"+
             "Error is "+error);
-            value = "";
+            rowsvalue = "";
         }
-        return await value;
+        return await rowsvalue;
     }
 
     async getHeaderNames(filePath)
@@ -101,7 +101,7 @@ static headerNamesMap;
         }
         catch(error)
         {
-            console.log("Could not parse the file "+filePath +"\r\n"+
+            log.info("Could not parse the file "+filePath +"\r\n"+
             "Error is "+error);
             value = "";
         }
@@ -117,9 +117,9 @@ static headerNamesMap;
         }
         catch(error)
         {
-            console.log("Could not parse the file "+filePath +"\r\n"+
+            log.info("Could not parse the file "+filePath +"\r\n"+
             "Error is "+error);
-            //console.log("Field "+columnName +" is not available in csv file at row "+rowNum);
+            //log.info("Field "+columnName +" is not available in csv file at row "+rowNum);
             value = "";
         }
         return await value
@@ -134,7 +134,7 @@ static headerNamesMap;
         }
         catch(error)
         {
-            console.log("Could not parse the file "+filePath +"\r\n"+
+            log.info("Could not parse the file "+filePath +"\r\n"+
             "Error is "+error);
             value = "";
         }

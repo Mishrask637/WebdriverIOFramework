@@ -14,7 +14,7 @@
     "executeServer": "execute.sh",
     "executeTests": "executeTests.sh",
     "loadReport": "LoadReport.bat"
-    },
+  },
   "author": "Suraj Mishra",
   "license": "ISC",
   "devDependencies": {
@@ -24,6 +24,7 @@
     "@wdio/cucumber-framework": "^7.16.12",
     "@wdio/local-runner": "^7.16.13",
     "@wdio/logger": "^7.16.0",
+    "@wdio/sauce-service": "^7.16.13",
     "@wdio/selenium-standalone-service": "^7.16.11",
     "@wdio/spec-reporter": "^7.16.11",
     "@wdio/types": "^7.8.0",

@@ -1,6 +1,6 @@
 import { Register } from './../pageobjects/Register';
 import { Given, When, Then } from "@wdio/cucumber-framework";
-import { DataTable } from "@wdio/cucumber-framework/node_modules/@cucumber/cucumber";
+import { DataTable } from "@cucumber/cucumber";
 
 const register = new Register();
 
