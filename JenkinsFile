@@ -9,7 +9,7 @@ options{
     buildDiscarder(logRotator(numToKeepStr:'20'))
 }
 
-triggers{cron(branchSpecificTrigger())}
+// triggers{cron(branchSpecificTrigger())}
 
 parameters{
     choice name:'Env_Name',
@@ -50,8 +50,8 @@ stages{
             script{
                     try{
                         sh """
-                        echo 'entered into build phase'
-                        npm run selenium-standalone-start &&
+                        echo 'entered into test phase'
+                        npm run selenium-standalone-start &
                         sleep 10
                         npm run test --ENV=${Env_Name} --BROWSER=${Browser}
                         echo 'Test Success'
