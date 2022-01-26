@@ -52,7 +52,7 @@ stages{
                         sh """
                         echo 'entered into test phase'
                         npm run selenium-standalone-start &
-                        sleep 10
+                        sleep 10s
                         npm run test --ENV=${Env_Name} --BROWSER=${Browser}
                         echo 'Test Success'
                         """
