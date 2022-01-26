@@ -18,8 +18,9 @@ const allure = require('allure-commandline')
 
 let reportAggregator:ReportAggregator;
 let baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword,spec;
-let ENV = process.env.ENV;
-
+let ENV = process.env.ENV || 'dev';
+let BROWSER = process.env.BROWSER || 'chrome';
+let browserName=BROWSER;
 
 
 if (ENV === 'test') {
@@ -57,6 +58,18 @@ else
 {
     console.log('Please enter a proper ENV value');
     process.exit();
+}
+
+if(BROWSER.includes('chrome') )
+{
+    browserName='chrome'
+}
+else if(BROWSER.includes('EDGE')){
+    browserName='MicrosoftEdge'
+}
+else if(BROWSER.includes('Firefox'))
+{
+    browserName='Firefox'
 }
 
 export {
@@ -129,7 +142,7 @@ export const config: WebdriverIO.Config = {
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
         maxInstances: 1,
-        browserName: 'chrome',
+        browserName: BROWSER,
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
