@@ -1,0 +1,145 @@
+import groovy.json.JsonSlurper
+import java.nio.file.Paths
+
+pipeline{
+
+agent any
+
+options{
+    buildDiscarder(logRotator(numToKeepStr:'20'))
+}
+
+//triggers{cron(branchSpecificTrigger())}
+
+environment{
+    ENV = branchSpecificEnv();
+}
+
+parameters{
+    choice name:'Env_Name',
+    choices:['test','dev','stage','prod'],
+    description:'Select The Environment'
+
+    choice name :'Browser',
+    choices:['chrome','Edge','firefox'],
+    description:'Select Browser'
+}
+
+stages{
+    stage('Build')
+    {
+        /* when{
+            branch env.BRANCH_NAME
+        } */
+        steps{
+            script{
+                try{
+                    sh """
+                    echo 'entered into build phase'
+                    npm run install
+                    npm run selenium-standalone-install
+                    echo 'Build Success'
+                    """
+                    currentBuild.result = 'SUCCESS'
+                }
+                catch(Exception e)
+                {
+                    echo '**************** Build Error ************'
+                    isBuildStatusFail=true
+                    currentBuild.result='FAILURE'
+                }
+            }
+        }
+    }
+    stage('test')
+        {
+        /* when{
+            branch env.BRANCH_NAME
+        } */
+        steps{
+            script{
+                    try{
+                        sh """
+                        echo 'entered into build phase'
+                        npm run selenium-standalone-start
+                        npm run test --ENV=${Env_Name} --BROWSER=${Browser}
+                        echo 'Test Success'
+                        """
+                        currentBuild.result = 'SUCCESS'
+                    }
+                    catch(Exception e)
+                    {
+                        echo '**************** Test Error ************'
+                        isBuildStatusFail=true
+                        currentBuild.result='FAILURE'
+                    }
+                }
+            }
+        }
+        stage('Report')
+        {
+            steps{
+                cucumber '**/reports/json/*.json'
+                emailext mimeType : 'text/html',
+                body:"""Automation Test Result ${env.JOB_NAME} is ${currentBuild.result}.
+                <br></br>
+                <br>The Build status is ${currentBuild.result}.
+                <br>Build URL:${BUILD_URL}cucumber-html-reports/overview-features.html"""
+                subject: """Automation Test Result for build no ${env.BUILD_NUMBER}""",
+                to:"""${env.emailAddress}""",
+                attachmentsPattern:'reports/html/*.html'
+            }
+        }
+    }
+
+    post{
+        always{
+            echo 'This will always run'
+        }
+        success{
+            echo 'This will run only if successful'
+        }
+        failure{
+            echo 'This will run only if failed'
+        }
+        unstable{
+            echo 'This will run only if the run was marked as unstable'
+        }
+        changed{
+            echo 'This will run only if the status of the pipeline has changed'
+            echo 'For example, if the pipeline was perviously failing but is now successful'
+        }
+    }
+}
+
+/* def branchSpecificTrigger()
+{
+    if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
+    {
+        return '* * * * *'
+    }
+    else if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
+    {
+        return '* * * * *'
+    }
+}
+
+def branchSpecificEnv()
+{
+    if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
+    {
+        return 'test'
+    }
+    else if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
+    {
+        return 'dev'
+    }
+    else if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
+    {
+        return 'stage'
+    }
+    else if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
+    {
+        return 'prod'
+    }
+} */
