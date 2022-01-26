@@ -9,11 +9,7 @@ options{
     buildDiscarder(logRotator(numToKeepStr:'20'))
 }
 
-//triggers{cron(branchSpecificTrigger())}
-
-environment{
-    ENV = branchSpecificEnv();
-}
+triggers{cron(branchSpecificTrigger())}
 
 parameters{
     choice name:'Env_Name',
@@ -28,9 +24,6 @@ parameters{
 stages{
     stage('Build')
     {
-        /* when{
-            branch env.BRANCH_NAME
-        } */
         steps{
             script{
                 try{
@@ -53,16 +46,13 @@ stages{
     }
     stage('test')
         {
-        /* when{
-            branch env.BRANCH_NAME
-        } */
         steps{
             script{
                     try{
                         sh """
                         echo 'entered into build phase'
-                        npm run selenium-standalone-start &
-                        sleep 10s
+                        npm run selenium-standalone-start &&
+                        sleep 10
                         npm run test --ENV=${Env_Name} --BROWSER=${Browser}
                         echo 'Test Success'
                         """
@@ -77,20 +67,20 @@ stages{
                 }
             }
         }
-        // stage('Report')
-        // {
-        //     steps{
-        //         cucumber '**/reports/json/*.json'
-        //         emailext mimeType : 'text/html',
-        //         body:"""Automation Test Result ${env.JOB_NAME} is ${currentBuild.result}.
-        //         <br></br>
-        //         <br>The Build status is ${currentBuild.result}.
-        //         <br>Build URL:${BUILD_URL}cucumber-html-reports/overview-features.html"""
-        //         subject: "Automation Test Result for build no ${env.BUILD_NUMBER}",
-        //         to:"""${env.emailAddress}""",
-        //         attachmentsPattern:'reports/html/*.html'
-        //     }
-        // }
+        stage('Report')
+        {
+            steps{
+                cucumber '**/reports/json/*.json'
+                // emailext mimeType : 'text/html',
+                // body:"""Automation Test Result ${env.JOB_NAME} is ${currentBuild.result}.
+                // <br></br>
+                // <br>The Build status is ${currentBuild.result}.
+                // <br>Build URL:${BUILD_URL}cucumber-html-reports/overview-features.html"""
+                // subject: "Automation Test Result for build no ${env.BUILD_NUMBER}",
+                // to:"""${env.emailAddress}""",
+                // attachmentsPattern:'reports/html/*.html'
+            }
+        }
     }
 
     post{
@@ -113,34 +103,11 @@ stages{
     }
 }
 
-def branchSpecificTrigger()
-{
-    if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
+    def branchSpecificTrigger()
     {
-        return '* * * * *'
-    }
-    else if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
-    {
-        return '* * * * *'
-    }
-}
-
-def branchSpecificEnv()
-{
-    if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
-    {
-        return 'test'
-    }
-    else if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
-    {
-        return 'dev'
-    }
-    else if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
-    {
-        return 'stage'
-    }
-    else if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
-    {
-        return 'prod'
+        if(env.BRANCH_NAME=='master')
+        {
+            return '* * * * *'
+        }
     }
 }
