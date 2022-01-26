@@ -71,14 +71,6 @@ stages{
         {
             steps{
                 cucumber '**/reports/json/*.json'
-                // emailext mimeType : 'text/html',
-                // body:"""Automation Test Result ${env.JOB_NAME} is ${currentBuild.result}.
-                // <br></br>
-                // <br>The Build status is ${currentBuild.result}.
-                // <br>Build URL:${BUILD_URL}cucumber-html-reports/overview-features.html"""
-                // subject: "Automation Test Result for build no ${env.BUILD_NUMBER}",
-                // to:"""${env.emailAddress}""",
-                // attachmentsPattern:'reports/html/*.html'
             }
         }
     }
