@@ -112,7 +112,7 @@ stages{
     }
 }
 
-/* def branchSpecificTrigger()
+def branchSpecificTrigger()
 {
     if(env.BRANCH_NAME=='master' || env.BRANCH_NAME=='master')
     {
@@ -142,4 +142,4 @@ def branchSpecificEnv()
     {
         return 'prod'
     }
-} */
+}
