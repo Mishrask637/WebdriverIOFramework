@@ -36,7 +36,7 @@ stages{
                 try{
                     sh """
                     echo 'entered into build phase'
-                    npm run install
+                    npm install
                     npm run selenium-standalone-install
                     echo 'Build Success'
                     """
@@ -61,7 +61,8 @@ stages{
                     try{
                         sh """
                         echo 'entered into build phase'
-                        npm run selenium-standalone-start
+                        npm run selenium-standalone-start &
+                        sleep 10s
                         npm run test --ENV=${Env_Name} --BROWSER=${Browser}
                         echo 'Test Success'
                         """
