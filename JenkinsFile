@@ -17,7 +17,7 @@ parameters{
     description:'Select The Environment'
 
     choice name :'Browser',
-    choices:['chrome','Edge','firefox'],
+    choices:['chrome','MicrosoftEdgeEdge','firefox'],
     description:'Select Browser'
 }
 
