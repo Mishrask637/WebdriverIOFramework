@@ -9,7 +9,7 @@ options{
     buildDiscarder(logRotator(numToKeepStr:'20'))
 }
 
-// triggers{cron(branchSpecificTrigger())}
+// triggers{cron(getCronPattern())}
 
 parameters{
     choice name:'Env_Name',
@@ -95,7 +95,7 @@ stages{
     }
 }
 
-    def branchSpecificTrigger()
+    def getCronPattern()
     {
         if(env.BRANCH_NAME=='master')
         {
