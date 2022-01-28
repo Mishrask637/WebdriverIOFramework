@@ -19,7 +19,7 @@ const allure = require('allure-commandline')
 let reportAggregator:ReportAggregator;
 let baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword,spec;
 let ENV = process.env.ENV || 'dev';
-let BROWSER = process.env.BROWSER;
+let BROWSER = process.env.BROWSER || 'chrome';
 let browserName=BROWSER;
 
 
