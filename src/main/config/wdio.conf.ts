@@ -20,7 +20,17 @@ let reportAggregator:ReportAggregator;
 let baseUrl,database,dbhostname,dbusername,dbpassword,appUsername,appPassword,spec;
 let ENV = process.env.ENV || 'dev';
 let BROWSER = process.env.BROWSER || 'chrome';
-let browserName=BROWSER;
+console.log('Browser name is '+BROWSER)
+let browserName;
+
+if(BROWSER==='chrome' || BROWSER==='MicrosoftEdge' || BROWSER==='firefox')
+{
+    browserName=BROWSER;
+}
+else{
+    console.log('Enter Proper Browser Name ')
+    process.exit();
+}
 
 
 if (ENV === 'test') {
@@ -142,7 +152,7 @@ export const config: WebdriverIO.Config = {
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
         maxInstances: 1,
-        browserName: BROWSER,
+        browserName: browserName,
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
