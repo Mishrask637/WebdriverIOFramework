@@ -60,7 +60,7 @@ stages{
                     }
                     catch(Exception e)
                     {
-                        echo '**************** Test Error ************'
+                        echo '**************** Test Error ************'+e
                         isBuildStatusFail=true
                         currentBuild.result='FAILURE'
                     }
