@@ -16,7 +16,7 @@ parameters{
     choices:['test','dev','stage','prod'],
     description:'Select The Environment'
 
-    choice name :'Browser',
+    choice name:'Browser',
     choices:['chrome','MicrosoftEdge','firefox'],
     description:'Select Browser'
 }
@@ -53,7 +53,7 @@ stages{
                         echo 'Entered Into Test Phase'
                         npm run selenium-standalone-start &
                         sleep 10s
-                        npm run test --ENV=${Env_Name} --BROWSER=\'${Browser}\'
+                        npm run test --ENV=${Env_Name} --BROWSER=\"${Browser}\"
                         echo 'Test Success'
                         """
                         currentBuild.result = 'SUCCESS'
