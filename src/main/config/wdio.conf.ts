@@ -17,10 +17,9 @@ const { removeSync } = require('fs-extra');
 const allure = require('allure-commandline')
 
 let reportAggregator:ReportAggregator;
-let baseUrl='',database,dbhostname,dbusername,dbpassword,appUsername,appPassword;
+let baseUrl='',database,dbhostname,dbusername,dbpassword,appUsername,appPassword,spec;
 let ENV = process.env.ENV;
 let BROWSER = process.env.BROWSER || 'chrome';
-let BrowserInstance = process.env.BROWSERINSTANCE || '1';
 console.log('Browser name is '+BROWSER)
 let browserName;
 
@@ -42,7 +41,7 @@ if (ENV === 'test') {
     dbpassword = '',
     appUsername='',
     appPassword=''
-    // spec='./src/main/features/HomePage.feature'
+    spec='./src/main/features/HomePage.feature'
 
 }
 else if (ENV === 'dev') {
@@ -53,7 +52,7 @@ else if (ENV === 'dev') {
     dbpassword = '',
     appUsername='',
     appPassword=''
-    // spec='./src/main/features/Register.feature'
+    spec='./src/main/features/Register.feature'
 }
 else if (ENV === 'stage') {
     baseUrl = 'http://demo.automationtesting.in/Windows.html';
@@ -63,7 +62,7 @@ else if (ENV === 'stage') {
     dbpassword = '',
     appUsername='',
     appPassword=''
-    // spec='./src/main/features/SwitchWindows.feature'
+    spec='./src/main/features/SwitchWindows.feature'
 }
 else if(ENV === '')
 {
@@ -122,10 +121,10 @@ export const config: WebdriverIO.Config = {
     //
     
     specs: [
-        './src/main/features/HomePage.feature',
-        './src/main/features/Register.feature',
-        './src/main/features/SwitchWindows.feature'
-        // spec
+        // './src/main/features/HomePage.feature',
+        // './src/main/features/Register.feature',
+        // './src/main/features/SwitchWindows.feature'
+        spec
     ],
     // Patterns to exclude.
     exclude: [
@@ -159,7 +158,7 @@ export const config: WebdriverIO.Config = {
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
-        maxInstances: +BrowserInstance,
+        maxInstances: 100,
         browserName: browserName,
         acceptInsecureCerts: true
         // If outputDir is provided WebdriverIO can capture driver session logs
