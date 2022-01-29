@@ -4,7 +4,7 @@
   "description": "This is a cucumber webdriver-io Framework",
   "main": "index.js",
   "scripts": {
-    "test2":"cross-env NODE_ENV=%env% npx wdio ./src/main/config/wdio.conf.ts",
+    "test2": "cross-env NODE_ENV=%env% npx wdio ./src/main/config/wdio.conf.ts",
     "test": "ts-node -e \"const env = process.env; env.ENV = process.env.npm_config_ENV; env.BROWSER = process.env.npm_config_BROWSER; require('child_process').execSync('npx wdio ./src/main/config/wdio.conf.ts', {env: env, stdio: 'inherit'});\"",
     "test1": "cross-env ENV=test npx wdio ./src/main/config/wdio.conf.ts",
     "dev": "cross-env ENV=dev npx wdio ./src/main/config/wdio.conf.ts",
@@ -50,6 +50,7 @@
     "wdio-cucumber-reporter": "0.0.2",
     "wdio-cucumberjs-json-reporter": "^4.1.3",
     "wdio-html-nice-reporter": "^7.9.1",
+    "wdio-wait-for": "^2.2.1",
     "webdriverio": "^7.16.13"
   },
   "dependencies": {

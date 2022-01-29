@@ -3,10 +3,12 @@ import { log } from "../Logger/logger";
 import { PropertiesReader } from "../Utils/PropertiesReader";
 import { ReadConfig } from '../config/ReadConfig';
 import { DataTable } from "@cucumber/cucumber";
+import { HomePage } from "./HomePage";
+import { ExpectedWaits } from '../Utils/ExpectedWaits';
+
 const readConf = new ReadConfig();
-
+const expectedWaits = new ExpectedWaits();
 const prop = new PropertiesReader();
-
 
 export class Register {
 
@@ -41,6 +43,7 @@ export class Register {
         let rows = await UIActionLibrary.hashes(data);
         let firstName = await rows[0].FirstName;
         let lastname = await rows[0].LastName;
+        await expectedWaits.waitForElementToBeDisplayed(this.firstName,HomePage.timeOut);
         await UIActionLibrary.sendKeys(this.firstName, firstName);
         await UIActionLibrary.sendKeys(this.lastName, lastname);
     }
@@ -49,6 +52,7 @@ export class Register {
         // let rows = await data.hashes();
         let rows = await UIActionLibrary.hashes(data);
         let address = await rows[0].Address;
+        await expectedWaits.waitForElementToBeDisplayed(this.address,HomePage.timeOut);
         await UIActionLibrary.sendKeys(this.address, address);
     }
 
@@ -56,6 +60,7 @@ export class Register {
         // let rows = await data.hashes();
         let rows = await UIActionLibrary.hashes(data);
         let emailAddress = await rows[0].Email;
+        await expectedWaits.waitForElementToBeDisplayed(this.email,HomePage.timeOut);
         await UIActionLibrary.sendKeys(this.email, emailAddress);
     }
 
@@ -63,6 +68,7 @@ export class Register {
         // let rows = await data.hashes();
         let rows = await UIActionLibrary.hashes(data);
         let phone = await rows[0].PhoneNumber;
+        await expectedWaits.waitForElementToBeDisplayed(this.phone,HomePage.timeOut);
         await UIActionLibrary.sendKeys(this.phone, phone);
     }
 
@@ -84,6 +90,7 @@ export class Register {
         let hobby = await data.raw().toString();
         await log.info('hobby Value is ' + hobby);
         if (hobby == 'Cricket') {
+            await expectedWaits.waitForElementToBeDisplayed(this.cricket,HomePage.timeOut);
             await UIActionLibrary.click(await this.cricket);
         }
     }
@@ -91,8 +98,10 @@ export class Register {
     async selectlanguage(data: DataTable) {
         let language = await data.raw().toString();
         await log.info('language Value is ' + language);
+        await expectedWaits.waitForElementToBeDisplayed(this.language,HomePage.timeOut);
         await UIActionLibrary.click(this.language);
         if (language == 'English') {
+            await expectedWaits.waitForElementToBeDisplayed(this.english,HomePage.timeOut);
             await UIActionLibrary.click(await this.english);
         }
     }
@@ -100,6 +109,7 @@ export class Register {
     async selectSkill(data: DataTable) {
         let skill = await data.raw().toString();
         await log.info('Skill Value is ' + skill);
+        await expectedWaits.waitForElementToBeDisplayed(this.skills,HomePage.timeOut);
         await this.skills.selectByVisibleText(skill);
     }
 
@@ -107,6 +117,7 @@ export class Register {
         await UIActionLibrary.scrollIntoView(await this.submit);
         let country = await data.raw().toString();
         await log.info('Country Value is ' + country);
+        await expectedWaits.waitForElementToBeDisplayed(this.country,HomePage.timeOut);
         await UIActionLibrary.click(await this.country);
         await UIActionLibrary.sendKeys(await this.search, country);
         await UIActionLibrary.click(await this.countryValue);
@@ -118,21 +129,24 @@ export class Register {
         let Year = await rows[0].Year;
         let Month = await rows[0].Month;
         let Date = await rows[0].Date;
-
+        await expectedWaits.waitForElementToBeDisplayed(this.birthYear,HomePage.timeOut);
         await this.birthYear.selectByVisibleText(Year);
         await this.birthMonth.selectByVisibleText(Month);
         await this.birthDate.selectByVisibleText(Date);
     }
 
     async enterPassword(password) {
+        await expectedWaits.waitForElementToBeDisplayed(this.password,HomePage.timeOut);
         await UIActionLibrary.sendKeys(this.password, password);
     }
 
     async enterConfirmPassword(password) {
+        await expectedWaits.waitForElementToBeDisplayed(this.confirmPassword,HomePage.timeOut);
         await UIActionLibrary.sendKeys(this.confirmPassword, password);
     }
 
     async clickOnSubmit() {
+        await expectedWaits.waitForElementToBeDisplayed(this.submit,HomePage.timeOut);
         await UIActionLibrary.click(this.submit)
         await browser.pause(5000);
     }

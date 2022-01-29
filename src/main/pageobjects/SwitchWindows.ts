@@ -1,8 +1,12 @@
+import { Assert } from './../Utils/Assert';
 import { UIActionLibrary } from './../Utils/UIActionLibrary';
 import { PropertiesReader } from "../Utils/PropertiesReader";
 import { ReadConfig } from '../config/ReadConfig';
+import { ExpectedWaits } from '../Utils/ExpectedWaits';
+import { HomePage } from './HomePage';
 const readConf = new ReadConfig();
 const prop = new PropertiesReader();
+const expectedWaits = new ExpectedWaits();
 
 export class SwitchWindows{
 
@@ -22,35 +26,38 @@ export class SwitchWindows{
 
     async clickOnOpenNewTabButton()
     {
+        await expectedWaits.waitForElementToBeClickable(this.newTab,HomePage.timeOut);
         await UIActionLibrary.click(this.newTab);
     }
 
     async clickOnClickButton()
     {
+        await expectedWaits.waitForElementToBeClickable(this.clickButton,HomePage.timeOut);
         await UIActionLibrary.click(this.clickButton);
         await browser.pause(5000);
         console.log("Window handle before switch is "+await browser.getWindowHandle());
         await UIActionLibrary.swicthTab();
-        await expect(await this.text.isDisplayed()).toBe(true);
+        await Assert.equal(await this.text.isDisplayed(),true);
     }
 
     async switchbackToSwitchPage()
     {
         await UIActionLibrary.swicthTab();
-        await browser.pause(5000);
-        await expect(await this.clickButton.isDisplayed()).toBe(true);
+        await expectedWaits.waitForElementToBeClickable(this.clickButton,HomePage.timeOut);
+        await Assert.equal(await this.clickButton.isDisplayed(),true);
     }
 
     async moveToSwitchToTab()
     {
+        await expectedWaits.waitForElementToBeDisplayed(this.switchToTab,HomePage.timeOut);
         await UIActionLibrary.moveTo(this.switchToTab);
-        await browser.pause(5000);
     }
 
     async clickOnRegister()
     {
+        await expectedWaits.waitForElementToBeClickable(this.RegisterTab,HomePage.timeOut);
         await UIActionLibrary.click(this.RegisterTab);
-        await browser.pause(2000);
+        await expectedWaits.waitForElementToBeDisplayed(this.RegisterTab,HomePage.timeOut);
         await UIActionLibrary.scrollIntoView(this.submitbtn);
     }
 

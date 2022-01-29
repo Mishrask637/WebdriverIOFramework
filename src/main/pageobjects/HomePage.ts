@@ -34,57 +34,64 @@ export class HomePage {
 
     async clickOnTab(tabname)
     {
+
         if(await tabname == "Add Customer")
         {
+            await expectedWaits.waitForElementToBeClickable(this.addCustomerTab,HomePage.timeOut);
             await UIActionLibrary.click(await this.addCustomerTab);
             // await this.addCustomerTab.click();
         }
         else if(await tabname == "Open Account")
         {
+            await expectedWaits.waitForElementToBeClickable(this.openAccountTab,HomePage.timeOut);
             await UIActionLibrary.click(await this.openAccountTab);
             // await this.openAccountTab.click();
         }
         else if(await tabname == "Customers")
         {
+            await expectedWaits.waitForElementToBeClickable(this.customersTab,HomePage.timeOut);
             await UIActionLibrary.click(await this.customersTab);
             // await this.customersTab.click();
         }
-        await browser.pause(2000);
     }
 
     async enterFieldValue(fieldname,fieldValue)
     {
         if(await fieldname == "First Name")
         {
+            await expectedWaits.waitForElementToBeDisplayed(this.firstNameField,HomePage.timeOut);
             await UIActionLibrary.sendKeys(await this.firstNameField,fieldValue);
             // await this.firstNameField.setValue(fieldValue);
         }
         else if(await fieldname == "Last Name")
         {
+            await expectedWaits.waitForElementToBeDisplayed(this.lastNameField,HomePage.timeOut);
             await UIActionLibrary.sendKeys(await this.lastNameField,fieldValue);
             // await this.lastNameField.setValue(fieldValue);
         }
         else if(await fieldname == "Post Code")
         {
+            await expectedWaits.waitForElementToBeDisplayed(this.postCodeField,HomePage.timeOut);
             await UIActionLibrary.sendKeys(await this.postCodeField,fieldValue);
             // await this.postCodeField.setValue(fieldValue);
         }
-        await browser.pause(1000);
     }
 
     async clickOnButton(buttonName)
     {
         if(await buttonName=="Add Customer")
         {
+            await expectedWaits.waitForElementToBeClickable(this.addCustomerButton,HomePage.timeOut);
             await UIActionLibrary.click(await this.addCustomerButton);
             // await this.addCustomerButton.click();
         }
         if(await buttonName=="Process")
         {
+            await expectedWaits.waitForElementToBeClickable(this.processButton,HomePage.timeOut);
             await UIActionLibrary.click(await this.processButton);
             // await this.processButton.click();
         }
-        await browser.pause(1000);
+        expectedWaits.waitForAlertToBeDisplayed(HomePage.timeOut);
         let userId = await UIActionLibrary.getAlertText();
         log.info("Alert Text is "+userId);
         await UIActionLibrary.acceptAlert();
@@ -100,21 +107,20 @@ export class HomePage {
 
     async selectCustomerName(customerName)
     {
+        await expectedWaits.waitForElementToBeDisplayed(this.customerDropdownOptions,HomePage.timeOut);
         await this.customerDropdownOptions.selectByVisibleText(customerName);
-        await browser.pause(1000);
     }
 
     async selectCurrency(currency)
     {
+        await expectedWaits.waitForElementToBeDisplayed(this.currencyDropdownOptions,HomePage.timeOut);
         await this.currencyDropdownOptions.selectByVisibleText(currency);
-        await browser.pause(1000);
     }
 
     async searchCustomer(customerName)
     {
         await expectedWaits.waitForElementToBeDisplayed(await this.searchField,HomePage.timeOut);
         await UIActionLibrary.sendKeys(await this.searchField,customerName);
-        await browser.pause(1000);
     }
 
     async verifyCustomerFromTable()
@@ -131,7 +137,6 @@ export class HomePage {
             log.info("Col Value is "+await array.col);
             await ColArray.push(array.col);
         }
-        await browser.pause(1000);
     }
 }
 

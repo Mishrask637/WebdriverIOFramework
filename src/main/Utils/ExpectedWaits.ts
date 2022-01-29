@@ -17,4 +17,9 @@ export class ExpectedWaits {
         });
     }
 
+    async waitForAlertToBeDisplayed(timeOut) {
+        await browser.waitUntil(async ()=> {return browser.isAlertOpen()}, {
+            timeout: timeOut, timeoutMsg: "Element Not Enabled"
+        });
+    }
 }
