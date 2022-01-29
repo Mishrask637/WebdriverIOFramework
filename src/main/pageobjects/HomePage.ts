@@ -22,7 +22,7 @@ export class HomePage {
     customerDropdownOptions = $('#userSelect');
     currencyDropdownOptions = $("#currency");
     searchField = $("//input[@placeholder='Search Customer']");
-    deleteButton = $("//button[text()='Delete']");
+    deleteButton = $("//button[text()='Deletee']");
     static timeOut = 10000;
     implicitTimeout = 10000;
 
@@ -39,19 +39,16 @@ export class HomePage {
         {
             await expectedWaits.waitForElementToBeClickable(this.addCustomerTab,HomePage.timeOut);
             await UIActionLibrary.click(await this.addCustomerTab);
-            // await this.addCustomerTab.click();
         }
         else if(await tabname == "Open Account")
         {
             await expectedWaits.waitForElementToBeClickable(this.openAccountTab,HomePage.timeOut);
             await UIActionLibrary.click(await this.openAccountTab);
-            // await this.openAccountTab.click();
         }
         else if(await tabname == "Customers")
         {
             await expectedWaits.waitForElementToBeClickable(this.customersTab,HomePage.timeOut);
             await UIActionLibrary.click(await this.customersTab);
-            // await this.customersTab.click();
         }
     }
 
@@ -61,19 +58,16 @@ export class HomePage {
         {
             await expectedWaits.waitForElementToBeDisplayed(this.firstNameField,HomePage.timeOut);
             await UIActionLibrary.sendKeys(await this.firstNameField,fieldValue);
-            // await this.firstNameField.setValue(fieldValue);
         }
         else if(await fieldname == "Last Name")
         {
             await expectedWaits.waitForElementToBeDisplayed(this.lastNameField,HomePage.timeOut);
             await UIActionLibrary.sendKeys(await this.lastNameField,fieldValue);
-            // await this.lastNameField.setValue(fieldValue);
         }
         else if(await fieldname == "Post Code")
         {
             await expectedWaits.waitForElementToBeDisplayed(this.postCodeField,HomePage.timeOut);
             await UIActionLibrary.sendKeys(await this.postCodeField,fieldValue);
-            // await this.postCodeField.setValue(fieldValue);
         }
     }
 
@@ -83,13 +77,11 @@ export class HomePage {
         {
             await expectedWaits.waitForElementToBeClickable(this.addCustomerButton,HomePage.timeOut);
             await UIActionLibrary.click(await this.addCustomerButton);
-            // await this.addCustomerButton.click();
         }
         if(await buttonName=="Process")
         {
             await expectedWaits.waitForElementToBeClickable(this.processButton,HomePage.timeOut);
             await UIActionLibrary.click(await this.processButton);
-            // await this.processButton.click();
         }
         expectedWaits.waitForAlertToBeDisplayed(HomePage.timeOut);
         let userId = await UIActionLibrary.getAlertText();

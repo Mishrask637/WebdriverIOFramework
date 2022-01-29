@@ -39,7 +39,6 @@ export class Register {
 
 
     async enterFullName(data: DataTable) {
-        // let rows = await data.hashes();
         let rows = await UIActionLibrary.hashes(data);
         let firstName = await rows[0].FirstName;
         let lastname = await rows[0].LastName;
@@ -49,7 +48,6 @@ export class Register {
     }
 
     async enterAddress(data: DataTable) {
-        // let rows = await data.hashes();
         let rows = await UIActionLibrary.hashes(data);
         let address = await rows[0].Address;
         await expectedWaits.waitForElementToBeDisplayed(this.address,HomePage.timeOut);
@@ -57,7 +55,6 @@ export class Register {
     }
 
     async enterEmail(data: DataTable) {
-        // let rows = await data.hashes();
         let rows = await UIActionLibrary.hashes(data);
         let emailAddress = await rows[0].Email;
         await expectedWaits.waitForElementToBeDisplayed(this.email,HomePage.timeOut);
@@ -65,7 +62,6 @@ export class Register {
     }
 
     async enterPhone(data: DataTable) {
-        // let rows = await data.hashes();
         let rows = await UIActionLibrary.hashes(data);
         let phone = await rows[0].PhoneNumber;
         await expectedWaits.waitForElementToBeDisplayed(this.phone,HomePage.timeOut);
@@ -73,7 +69,6 @@ export class Register {
     }
 
     async selectGender(data: DataTable) {
-        // let rows = await data.hashes();
         let rows = await UIActionLibrary.hashes(data);
         let gender = await rows[0].Gender;
         if (gender == 'Male') {
@@ -124,7 +119,6 @@ export class Register {
     }
 
     async selectDateOfBirth(data: DataTable) {
-        // let rows = await data.hashes();
         let rows = await UIActionLibrary.hashes(data);
         let Year = await rows[0].Year;
         let Month = await rows[0].Month;
