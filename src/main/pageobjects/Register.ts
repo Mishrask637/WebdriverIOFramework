@@ -147,6 +147,10 @@ export class Register {
 
     async goToDemoSite() {
         let url = await readConf.getbaseUrl();
+        if(url=='')
+        {
+            url = 'http://demo.automationtesting.in/Register.html'
+        }
         await browser.url(url);
         await browser.maximizeWindow();
     }

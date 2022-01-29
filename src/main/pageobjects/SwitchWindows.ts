@@ -20,6 +20,10 @@ export class SwitchWindows{
     async goToSwitchTabPage()
     {
         let url = await readConf.getbaseUrl();
+        if(url=='')
+        {
+            url = 'http://demo.automationtesting.in/Windows.html'
+        }
         await browser.url(url);
         browser.maximizeWindow();
     }

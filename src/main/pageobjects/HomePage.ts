@@ -91,8 +91,12 @@ export class HomePage {
 
     async navigateToManagerLoginHomepage()
     {
-        let uri = await readConf.getbaseUrl();
-        await browser.url(uri);
+        let url = await readConf.getbaseUrl();
+        if(url=='')
+        {
+            url = 'https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager'
+        }
+        await browser.url(url);
         await browser.maximizeWindow();
         await browser.setTimeout({'implicit': this.implicitTimeout });
     }

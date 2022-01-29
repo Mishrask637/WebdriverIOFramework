@@ -19,6 +19,12 @@ parameters{
     choice name:'Browser_Name',
     choices:['chrome','MicrosoftEdge','firefox'],
     description:'Select Browser'
+
+    string(
+            defaultValue: '1', 
+            name: 'Browser_Intance',
+            trim: true
+        )
 }
 
 stages{
