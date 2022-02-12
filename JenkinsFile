@@ -72,6 +72,7 @@ stages{
         stage('Report')
         {
             steps{
+                script{
                 cucumber '**/reports/json/*.json'
                 def build = manager.build
 
@@ -89,9 +90,10 @@ stages{
                 <br>The Build status is ${currentBuild.result}.
                 <br>Build URL:${BUILD_URL}cucumber-html-reports/overview-features.html.
                 <br> Pass % is ${total - failed - skipped}% ."""
-                subject: "Automation Test Result for build no ${env.BUILD_NUMBER} "
-                to:"${env.emailAddress}"
+                subject: "Automation Test Result for build no ${env.BUILD_NUMBER} ",
+                to:"${env.emailAddress}",
                 attachmentsPattern:'reports/html/*.html'
+                }
             }
         }
     }
