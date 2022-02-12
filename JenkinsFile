@@ -84,7 +84,7 @@ stages{
                 manager.listener.logger.println('Failed: ' + failed)
                 manager.listener.logger.println('Skipped: ' + skipped)
                 manager.listener.logger.println('Passed: ' + (total - failed - skipped)) */
-                int successPercentage = setSuccessPercent(currentBuild);
+                // int successPercentage = setSuccessPercent(currentBuild);
                 emailext mimeType : 'text/html',
                 body:"""Automation Test Result ${env.JOB_NAME} is ${currentBuild.result}.
                 <br></br>
@@ -92,7 +92,7 @@ stages{
                 <br>Build URL:${BUILD_URL}cucumber-html-reports/overview-features.html.
                 <br> Pass % is ${successPercentage}% ."""
                 subject: "Automation Test Result for build no ${env.BUILD_NUMBER} "
-                to:"${env.emailAddress}"
+                to:"mishrask637@gmail.com"
                 attachmentsPattern:'reports/html/*.html'
                 }
             }
@@ -127,7 +127,7 @@ stages{
         }
     }
 
-    def setSuccessPercent(RunWrapper buildWrapper) {
+    /* def setSuccessPercent(RunWrapper buildWrapper) {
     try {
         def raw = buildWrapper.rawBuild
         def action = raw.getAction(CucumberTestResultAction.class)
@@ -145,5 +145,5 @@ stages{
         StringWriter errors = new StringWriter()
         e.printStackTrace(new PrintWriter(errors))
         echo errors.toString()
-    }
+    } */
 }
