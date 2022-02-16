@@ -73,6 +73,7 @@ stages{
             steps{
                 script{
                 cucumber '**/reports/json/*.json'
+                try{
                 emailext mimeType : 'text/html',
                 body:"""Automation Test Result ${env.JOB_NAME} is ${currentBuild.result}.
                 <br></br>
@@ -81,6 +82,11 @@ stages{
                 subject: "Automation Test Result for build no ${env.BUILD_NUMBER} ",
                 to:"ncsjr637@gmail.com",
                 attachmentsPattern:'reports/html/*.html'
+                }
+                catch(Exception e)
+                {
+                    echo 'Unable to send email '+e
+                }
                 }
             }
         }
