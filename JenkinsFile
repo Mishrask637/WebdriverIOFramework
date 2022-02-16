@@ -77,9 +77,9 @@ stages{
                 body:"""Automation Test Result ${env.JOB_NAME} is ${currentBuild.result}.
                 <br></br>
                 <br>The Build status is ${currentBuild.result}.
-                <br>Build URL:${BUILD_URL}cucumber-html-reports/overview-features.html."""
-                subject: "Automation Test Result for build no ${env.BUILD_NUMBER} "
-                to:"mishrask637@gmail.com"
+                <br>Build URL:${BUILD_URL}cucumber-html-reports/overview-features.html.""",
+                subject: "Automation Test Result for build no ${env.BUILD_NUMBER} ",
+                to:"mishrask637@gmail.com",
                 attachmentsPattern:'reports/html/*.html'
                 }
             }
