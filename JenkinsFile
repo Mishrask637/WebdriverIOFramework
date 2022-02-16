@@ -1,6 +1,5 @@
 import groovy.json.JsonSlurper
 import java.nio.file.Paths
-import hudson.model.*
 
 pipeline{
 
@@ -74,17 +73,6 @@ stages{
             steps{
                 script{
                 cucumber '**/reports/json/*.json'
-                /* def build = manager.build
-
-                int total = build.getTestResultAction().getTotalCount()
-                int failed = build.getTestResultAction().getFailCount()
-                int skipped = build.getTestResultAction().getSkipCount()
-                // can also be accessed like build.testResultAction.failCount
-                manager.listener.logger.println('Total: ' + total)
-                manager.listener.logger.println('Failed: ' + failed)
-                manager.listener.logger.println('Skipped: ' + skipped)
-                manager.listener.logger.println('Passed: ' + (total - failed - skipped)) */
-                // int successPercentage = setSuccessPercent(currentBuild);
                 emailext mimeType : 'text/html',
                 body:"""Automation Test Result ${env.JOB_NAME} is ${currentBuild.result}.
                 <br></br>
@@ -125,24 +113,3 @@ stages{
             return '* * * * *'
         }
     }
-
-    /* def setSuccessPercent(RunWrapper buildWrapper) {
-    try {
-        def raw = buildWrapper.rawBuild
-        def action = raw.getAction(CucumberTestResultAction.class)
-
-        def failCount = action.getFailCount()
-        def totalCount = action.getTotalCount()
-
-        def part = (totalCount - failCount) / totalCount
-        def percentFormat = new DecimalFormat("###.##%")
-        buildWrapper.description = percentFormat.format(part)
-    } catch (Exception e) {
-        //Print but don't fail
-        buildWrapper.description = "0%"
-        buildWrapper.result = Result.FAILURE.toString()
-        StringWriter errors = new StringWriter()
-        e.printStackTrace(new PrintWriter(errors))
-        echo errors.toString()
-    } 
-}*/

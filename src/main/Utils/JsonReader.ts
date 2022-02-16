@@ -1,3 +1,4 @@
+import { Then } from '@wdio/cucumber-framework';
 const fs = require('fs');
 import { log } from '../Logger/logger';
 export class JsonReader {
@@ -10,7 +11,7 @@ export class JsonReader {
             }
             try {
                 const jsonObject = JSON.parse(fileData);
-                log.info('Json object data is ' + await jsonObject)
+                await log.info('Json object data is ' + await JSON.stringify(jsonObject));
                 return callback && callback(null, await jsonObject);
             }
             catch (err) {
@@ -21,22 +22,36 @@ export class JsonReader {
     }
 
     async jsonReader(filePath) {
-        fs.readFile(filePath, 'utf-8', async (err, fileData) => {
+
+            await fs.readFile(filePath, 'utf-8', async (err, fileData) => {
             if (err) {
                 await log.info('Unable to read file ' + err);
+                return await err;
             }
             try {
-                const jsonObject = JSON.parse(fileData);
-                log.info('Json object data is ' + await jsonObject)
-                return jsonObject;
+                const jsonObject = await JSON.parse(await fileData);
+                await sleep(5000);
+                await log.info('Json object data is ' + await JSON.stringify(jsonObject));
+                return await jsonObject;
+                
             }
             catch (err) {
                 await log.info('Unable to parse json file..' + err);
+                return await err;
             }
+            
         });
     }
 
-    async jsonWriterWithCallback(filePath, jsonObject, callback) {
+
+    async jsonReaderSync(filePath)
+    {
+        let jsonObject = await fs.readFileSync(filePath, {encoding:'utf8'});
+        log.info("Json Object is "+jsonObject)
+        return await jsonObject
+    }
+
+    /* async jsonWriterWithCallback(filePath, jsonObject, callback) {
         fs.writeFile(filePath, JSON.stringify(jsonObject, null, 2), err => {
             if (err) {
                 log.info('Unable to write json to file ' + err)
@@ -57,5 +72,8 @@ export class JsonReader {
                 log.info('File Successfully Written.....')
             }
         });
-    }
+    } */
+}
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
